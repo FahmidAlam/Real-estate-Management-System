@@ -8,7 +8,7 @@ public class Owners {
     private Connection connection;
     private Scanner scanner;
 
-    public Owners(Connection connection, Scanner scanner){
+    public Owners(Connection connection){
         this.connection = connection;
         this.scanner = scanner;
 
