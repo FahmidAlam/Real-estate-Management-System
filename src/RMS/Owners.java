@@ -49,9 +49,9 @@ public class Owners {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery(query);
             System.out.println("Owners: ");
-            System.out.println("+----+--------------------------+----------------------------+------------+------------------------------+---------+");
-            System.out.println("|  Id | Name                    | Email                      | Phone      | Address                      | Type    |");
-            System.out.println("+----+--------------------------+----------------------------+------------+------------------------------+---------+");
+            System.out.println("+-----+--------------------------+----------------------------+------------+------------------------------+---------+");
+            System.out.println("| Id  | Name                     | Email                      | Phone      | Address                      | Type    |");
+            System.out.println("+-----+--------------------------+----------------------------+------------+------------------------------+---------+");
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
