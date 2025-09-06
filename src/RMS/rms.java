@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class rms {
     private static final String url = "jdbc:mysql://localhost:3306/RMS";
     private static final String username = "root";
-    private static final String password = "shagor";
+    private static final String password = "Thor_Loki";
     public static void main(String args[]){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -39,7 +39,23 @@ public class rms {
                 System.out.println("7. Show repairs");
                 System.out.println("8. Show costs");
                 System.out.println("9. Exit");
-                int choice = scanner.nextInt();
+                System.out.println("10 . add tenants");
+                System.out.println("11 . add leases");
+                System.out.println("12 . add payments");
+                System.out.println("13 . view due payments");
+                System.out.println("14 . add repairs");
+                System.out.println("15 . update repairs");
+                System.out.println("16 . add costs");
+                //int choice = scanner.nextInt();
+                String input = scanner.nextLine();
+                int choice;
+                try {
+                    choice = Integer.parseInt(input.trim());
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid choice.");
+                    continue;
+                }
+
                 switch (choice){
                     case 1:
                         owner.showOwner();
@@ -67,6 +83,27 @@ public class rms {
                         break;
                     case 9:
                         System.exit(0);
+                        break;
+                    case 10:
+                        tenants.addTenant();
+                        break;
+                    case 11:
+                        leases.addLease();
+                        break;
+                    case 12:
+                        payments.addPayment();
+                        break;
+                    case 13:
+                        payments.calculateDuePayments();
+                        break;
+                    case 14:
+                        repairs.addRepair();
+                        break;
+                    case 15:
+                        repairs.updateRepairStatus();
+                        break;
+                    case 16:
+                        costs.addCost();
                         break;
                     default:
                         System.out.println("Invalid choice");

@@ -59,11 +59,11 @@ public class Owners {
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
                 String type = resultSet.getString("type");
-                System.out.printf("|%-5s|%-25s|%-28s|%-12s|%-30s|%-9s|",id,name,email,phone,address,type);
+                System.out.printf("|%-5s|%-26s|%-28s|%-12s|%-30s|%-9s|",id,name,email,phone,address,type);
                 System.out.println();
 
             }
-            System.out.println("+----+--------------------------+----------------------------+------------+------------------------------+---------+");
+            System.out.println("+-----+--------------------------+----------------------------+------------+------------------------------+---------+");
 
 
 
@@ -71,7 +71,5 @@ public class Owners {
             e.printStackTrace();
         }
     }
-
-
 
 }
