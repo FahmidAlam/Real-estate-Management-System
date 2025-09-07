@@ -9,110 +9,110 @@ public class rms {
     private static final String url = "jdbc:mysql://localhost:3306/RMS";
     private static final String username = "root";
     private static final String password = "Thor_Loki";
-    public static void main(String args[]){
-        try{
+
+    public static void main(String[] args) {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         Scanner scanner = new Scanner(System.in);
-        try{
-            Connection connection = DriverManager.getConnection(url,username,password);
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
 
             Owners owner = new Owners(connection);
             Properties properties = new Properties(connection);
             Units units = new Units(connection);
-            Tenants tenants = new Tenants(connection,scanner);
-            Payments payments = new Payments(connection,scanner);
-            Leases leases = new Leases(connection,scanner);
-            Repairs repairs = new Repairs(connection,scanner);
-            Costs costs = new Costs(connection,scanner);
+            Tenants tenants = new Tenants(connection, scanner);
+            Payments payments = new Payments(connection, scanner);
+            Leases leases = new Leases(connection, scanner);
+            Repairs repairs = new Repairs(connection, scanner);
+            Costs costs = new Costs(connection, scanner);
 
-            while(true){
-                System.out.println("Realestate Management System");
-                System.out.println("1. Show owners");
-                System.out.println("2. Show properties");
-                System.out.println("3. Show units");
-                System.out.println("4. Show tenants");
-                System.out.println("5. Show payments");
-                System.out.println("6. Show leases");
-                System.out.println("7. Show repairs");
-                System.out.println("8. Show costs");
-                System.out.println("9. Exit");
-                System.out.println("10 . add tenants");
-                System.out.println("11 . add leases");
-                System.out.println("12 . add payments");
-                System.out.println("13 . view due payments");
-                System.out.println("14 . add repairs");
-                System.out.println("15 . update repairs");
-                System.out.println("16 . add costs");
-                //int choice = scanner.nextInt();
-                String input = scanner.nextLine();
-                int choice;
-                try {
-                    choice = Integer.parseInt(input.trim());
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid choice.");
-                    continue;
-                }
+            while (true) {
+                printMenu();
+                int choice = getUserChoice(scanner);
 
-                switch (choice){
-                    case 1:
-                        owner.showOwner();
-                        break;
-                    case 2:
-                        properties.showProperties();
-                        break;
-                    case 3:
-                        units.showUnits();
-                        break;
-                    case 4:
-                        tenants.showtenants();
-                        break;
-                    case 5:
-                        payments.showPayments();
-                        break;
-                    case 6:
-                        leases.showLeases();
-                        break;
-                    case 7:
-                        repairs.showRepairs();
-                        break;
-                    case 8:
-                        costs.showCosts();
-                        break;
-                    case 9:
+                switch (choice) {
+                    // Owners & Properties
+                    case 1 -> owner.showOwner();
+                    case 2 -> properties.showProperties();
+                    case 3 -> units.showUnits();
+
+                    // Tenants & Leases
+                    case 4 -> tenants.showtenants();
+                    case 5 -> tenants.addTenant();
+                    case 6 -> leases.showLeases();
+                    case 7 -> leases.addLease();
+
+                    // Payments
+                    case 8 -> payments.showPayments();
+                    case 9 -> payments.addPayment();
+                    case 10 -> payments.calculateDuePayments();
+
+                    // Repairs
+                    case 11 -> repairs.showRepairs();
+                    case 12 -> repairs.addRepair();
+                    case 13 -> repairs.updateRepairStatus();
+
+                    // Costs
+                    case 14 -> costs.showCosts();
+                    case 15 -> costs.addCost();
+
+                    // Exit
+                    case 0 -> {
+                        System.out.println("Exiting... Goodbye!");
                         System.exit(0);
-                        break;
-                    case 10:
-                        tenants.addTenant();
-                        break;
-                    case 11:
-                        leases.addLease();
-                        break;
-                    case 12:
-                        payments.addPayment();
-                        break;
-                    case 13:
-                        payments.calculateDuePayments();
-                        break;
-                    case 14:
-                        repairs.addRepair();
-                        break;
-                    case 15:
-                        repairs.updateRepairStatus();
-                        break;
-                    case 16:
-                        costs.addCost();
-                        break;
-                    default:
-                        System.out.println("Invalid choice");
+                    }
+
+                    default -> System.out.println("Invalid choice. Try again.");
                 }
             }
 
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void printMenu() {
+        System.out.println("\n===== Real Estate Management System =====");
+        System.out.println(" Owners & Properties");
+        System.out.println("  1. Show Owners");
+        System.out.println("  2. Show Properties");
+        System.out.println("  3. Show Units");
+        System.out.println();
+        System.out.println(" Tenants & Leases");
+        System.out.println("  4. Show Tenants");
+        System.out.println("  5. Add Tenant");
+        System.out.println("  6. Show Leases");
+        System.out.println("  7. Add Lease");
+        System.out.println();
+        System.out.println(" Payments");
+        System.out.println("  8. Show Payments");
+        System.out.println("  9. Add Payment");
+        System.out.println(" 10. View Due Payments");
+        System.out.println();
+        System.out.println(" Repairs");
+        System.out.println(" 11. Show Repairs");
+        System.out.println(" 12. Add Repair");
+        System.out.println(" 13. Update Repair Status");
+        System.out.println();
+        System.out.println(" Costs");
+        System.out.println(" 14. Show Costs");
+        System.out.println(" 15. Add Cost");
+        System.out.println();
+        System.out.println("  0. Exit");
+        System.out.println("=========================================");
+        System.out.print("Enter choice: ");
+    }
+
+    private static int getUserChoice(Scanner scanner) {
+        String input = scanner.nextLine();
+        try {
+            return Integer.parseInt(input.trim());
+        } catch (NumberFormatException e) {
+            return -1; // invalid input
         }
     }
 }

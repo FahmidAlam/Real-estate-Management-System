@@ -139,8 +139,18 @@ public class Payments {
 
     public void calculateDuePayments() {
         try {
+            //System.out.print("Enter Tenant ID: ");
+            //int tenantId = scanner.nextInt();
             System.out.print("Enter Tenant ID: ");
-            int tenantId = scanner.nextInt();
+            String tenantInput = scanner.nextLine();
+            int tenantId;
+            try {
+                tenantId = Integer.parseInt(tenantInput.trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid tenant ID.");
+                return;
+            }
+
 
             String query = "SELECT l.id, l.rent, IFNULL(SUM(p.amount), 0) as total_paid " +
                     "FROM Leases l " +
